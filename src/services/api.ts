@@ -93,11 +93,32 @@ api.interceptors.response.use(
   }
 );
 
+// Demo credentials for testing
+const DEMO_CREDENTIALS = {
+  'doctor': { password: 'password', role: 'doctor', id: '1' },
+  'analyst': { password: 'password', role: 'analyst', id: '2' },
+  'admin': { password: 'password', role: 'admin', id: '3' }
+};
+
 // Auth API
 export const authAPI = {
   login: async (username: string, password: string): Promise<LoginResponse> => {
-    const response = await api.post('/api/auth/login', { username, password });
-    return response.data;
+    // Mock authentication for demo
+    const user = DEMO_CREDENTIALS[username as keyof typeof DEMO_CREDENTIALS];
+    
+    if (!user || user.password !== password) {
+      throw new Error('Invalid credentials');
+    }
+    
+    return {
+      access_token: `demo_token_${user.id}`,
+      user: {
+        id: user.id,
+        username,
+        role: user.role,
+        email: `${username}@hospital.com`
+      }
+    };
   },
   
   logout: () => {

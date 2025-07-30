@@ -11,6 +11,7 @@ import DashboardPage from "./pages/DashboardPage";
 import PatientsPage from "./pages/PatientsPage";
 import ReportsPage from "./pages/ReportsPage";
 import XrayPage from "./pages/XrayPage";
+import { WorkflowPage } from "./pages/WorkflowPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,16 @@ const App = () => (
                 <ProtectedRoute requiredRoles={['admin', 'doctor', 'analyst']}>
                   <Layout>
                     <DashboardPage />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/workflow"
+              element={
+                <ProtectedRoute requiredRoles={['admin', 'doctor']}>
+                  <Layout>
+                    <WorkflowPage />
                   </Layout>
                 </ProtectedRoute>
               }
